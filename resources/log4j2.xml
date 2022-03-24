@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" monitorInterval="30" packages="com.abdullahteke.cactidump">
+    <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %p %m%n</Property>
+        <Property name="APP_LOG_ROOT">logs/</Property>
+        <Property name= "LOG4J_FORMAT_MSG_NO_LOOKUPS">true</Property>
+    </Properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT" follow="true">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+        </Console>
+ 
+        <RollingFile name="cacti2csv"
+            fileName="${APP_LOG_ROOT}/cacti2csv.log"
+            filePattern="${APP_LOG_ROOT}/cacti2csv-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+            <DefaultRolloverStrategy max="30" />
+        </RollingFile>
+    
+
+    </Appenders>
+    <Loggers>
+ 
+        <Logger name="com.abdullahteke.cactidump" additivity="false">
+            <AppenderRef ref="cacti2csv" />
+            <AppenderRef ref="Console" />
+        </Logger>
+ 
+        <Root level="debug">
+            <AppenderRef ref="Console" />
+            <AppenderRef ref="cacti2csv" />
+        </Root>
+    </Loggers>
+</Configuration>
